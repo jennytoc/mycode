@@ -1,6 +1,6 @@
 # mycode
 
-First repo for Python class.
+First repo for Python class. Learning how to version control projects with git.
 
 ## Getting Started
 
