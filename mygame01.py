@@ -18,6 +18,10 @@ def showStatus():
     # print the player's current location
     print('---------------------------')
     print('You are in the ' + currentRoom)
+    # display directions
+    for key,value in rooms[currentRoom].items():
+        if key != 'item':
+            print(f"You may go {key} for {value}")
     # print what the player is carrying
     print('Inventory:', inventory)
     # check if there's an item in the room, if so print it
@@ -45,11 +49,16 @@ rooms = {
             'Dining Room' : {
                   'west' : 'Hall',
                   'south': 'Garden',
+                  'east' : 'Living Room',
                   'item' : 'potion'
              },
             'Garden' : {
-                  'north' : 'Dining Room'
-            }
+                  'north' : 'Dining Room',
+            },
+            'Living Room' : {
+                  'west' : 'Dining Room',
+                  'item' : 'sword'
+                }
          }
 # start the player in the Hall
 currentRoom = 'Hall'
@@ -100,8 +109,13 @@ while True:
 
         ## If a player enters a room with a monster
     if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-        print('A monster has got you... GAME OVER!')
-        break
+        if 'sword' in inventory:
+            print("You were able to defeat the monster. Good job!")
+            del rooms[currentRoom]['item']
+        else:
+            print('A monster has got you... GAME OVER!')
+            break
+    
     ## Define how a player can win
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
         print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
