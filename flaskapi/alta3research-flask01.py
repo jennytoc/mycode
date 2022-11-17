@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+from flask import Flask
+from flask import request
+from flask import redirect
+from flask import jsonify
+
+import json
+
+app = Flask(__name__)
+
+characterdata = [{
+    "name" : "Jenni Tempest",
+    "job" : "Black Mage",
+    "type" : "DPS",
+    "skills" : [
+        "Blizzard",
+        "Meteor Shower",
+        "Thundara"
+        ]
+    }]
+
+@app.route("/")
+def index():
+    if request.method == 'POST':
+        data = request.json
+        if data:
+            data=json.loads(data)
+            name = data["name"]
+            job = data["job"]
+            jobType = data["type"]
+            skills = data["skills"]
+            characterdata.append({"name": name, "job": job, "type": jobType, "skills": skills})
+    return jsonify(characterdata)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=2224)
