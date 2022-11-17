@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 from flask import redirect
 from flask import jsonify
+from flask import render_template
 
 import json
 
@@ -20,7 +21,7 @@ characterdata = [{
         ]
     }]
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
         data = request.json
@@ -32,6 +33,10 @@ def index():
             skills = data["skills"]
             characterdata.append({"name": name, "job": job, "type": jobType, "skills": skills})
     return jsonify(characterdata)
+
+@app.route("/character")
+def printChar():
+    return render_template("mini-project03.html", character = characterdata)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=2224)

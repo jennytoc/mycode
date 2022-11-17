@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+   <body>
+       <h1>Character Info</h1>
+       {% for info in character %}
+            <p>{{ info.name }} is a {{ info.job }} and is responsible for {{ info.type }}. </p>
+            <p>Their skills include 
+            {% for skill in info.skills %}
+            {{ skill }}
+            {% endfor %}
+            </p>
+        {% endfor %}
+   </body>
+</html>
+
